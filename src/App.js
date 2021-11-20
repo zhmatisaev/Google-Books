@@ -122,8 +122,8 @@ function App() {
   // Handle Search
   const handleSubmit = () => {
     setLoading(true);
-    if (maxResults > 40 || maxResults < 1) {
-      toast.error("max results must be between 1 and 40");
+    if (maxResults > 20 || maxResults < 1) {
+      toast.error("max results must be between 1 and 20");
     } else {
       axios
         .get(
