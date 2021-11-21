@@ -98,6 +98,8 @@
 // export default App;
 
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
 import "./App.css";
 import {
   InputGroup,
@@ -112,17 +114,27 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import axios from "axios";
 import BookCard from "./BookCard.jsx";
+import { search_books } from "./store/actions";
+
 function App() {
+  const stateMaxResults = useSelector((state) => state.maxResults);
+  console.log(stateMaxResults);
+
+  // const dispatch = useDispatch(query);
+
   // States
-  const [maxResults, setMaxResults] = useState(10);
+  const [maxResults, setMaxResults] = useState();
+  // const [authors, setAuthors] = useState("");
   const [startIndex, setStartIndex] = useState(1);
   const [query, setQuery] = useState("");
+  const [categories, setCategories] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState([]);
   // Handle Search
   const handleSubmit = () => {
     setLoading(true);
-    if (maxResults > 20 || maxResults < 1) {
+    if (maxResults > 30 || maxResults < 1) {
       toast.error("max results must be between 1 and 20");
     } else {
       axios
@@ -157,7 +169,7 @@ function App() {
           className="display-2 text-center text-white mb-3"
           style={{ zIndex: 2 }}
         >
-          Google Books
+          Search Books
         </h1>
         <div style={{ width: "60%", zIndex: 2 }}>
           <InputGroup size="lg" className="mb-3">
@@ -165,6 +177,7 @@ function App() {
               placeholder="Book Search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              // onChange={dispatch(text))}
             />
             {/* <InputGroupAddon addonType="append"> */}
             <Button color="secondary" onClick={handleSubmit}>
@@ -194,6 +207,29 @@ function App() {
               />
             </FormGroup>
           </div>
+
+          <div className="d-flex text-white justify-content-center">
+            <FormGroup>
+              <Label for="maxResults"> Gategories</Label>
+              <Input
+                type="text"
+                id="categories"
+                placeholder=""
+                value={categories}
+                onChange={(e) => setCategories(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup className="ml-5">
+              <Label for="startIndex">Sorting by</Label>
+              <Input
+                type="text"
+                id=""
+                placeholder=""
+                // value={startIndex}
+                // onChange={(e) => setStartIndex(e.target.value)}
+              />
+            </FormGroup>
+          </div>
         </div>
       </div>
     );
@@ -208,7 +244,7 @@ function App() {
       );
     } else {
       const items = cards.map((item, i) => {
-        let thumbnail = "";
+        let thumbnail = " ";
         if (item.volumeInfo.imageLinks) {
           thumbnail = item.volumeInfo.imageLinks.thumbnail;
         }
@@ -240,7 +276,7 @@ function App() {
     <div className="w-100 h-100">
       {mainHeader()}
       {handleCards()}
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 }
