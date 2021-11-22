@@ -1,18 +1,18 @@
 export const SEARCH_BOOKS = "SEARCH_BOOKS";
-export const BOOKS = "BOOKS";
+export const QUERY = "QUERY";
 export const CARDS = "CARDS";
 
 export const search_books = (text) => {
   return {
     type: SEARCH_BOOKS,
-    text,
+    payload: text,
   };
 };
 
-export const books = (items) => {
+export const query = (text) => {
   return {
-    type: BOOKS,
-    items,
+    type: QUERY,
+    payload: text,
   };
 };
 

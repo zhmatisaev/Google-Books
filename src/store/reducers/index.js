@@ -1,7 +1,7 @@
 import { SEARCH_BOOKS } from "../actions";
 
 const initialState = {
-  maxResults: 10,
+  maxResults1: 100,
   startIndex: 1,
   query: "",
   loading: false,
